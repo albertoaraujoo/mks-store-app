@@ -64,7 +64,7 @@ const ProductDescription = styled.p`
 
 const BuyButton = styled.button`
   display: flex;
-  background-color: ${(props) => (props.addedToCart ? "#4CAF50" : "#0f52ba")};
+  background-color: #4caf50;
   justify-content: center;
   align-items: center;
   gap: 15px;
