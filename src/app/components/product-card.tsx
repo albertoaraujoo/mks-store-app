@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import ShoppingBag from "../icons/shopping-bag";
+import { useState } from "react";
 
 type Product = {
   name: string;
   price: number;
   image: string;
   description: string;
+  onBuyClick: () => void;
 };
 
 const CardContainer = styled.div`
@@ -62,6 +64,7 @@ const ProductDescription = styled.p`
 
 const BuyButton = styled.button`
   display: flex;
+  background-color: ${(props) => (props.addedToCart ? "#4CAF50" : "#0f52ba")};
   justify-content: center;
   align-items: center;
   gap: 15px;
@@ -72,9 +75,22 @@ const BuyButton = styled.button`
   border-radius: 0 0 8px 8px;
   color: #ffffff;
   font-weight: 600;
+  cursor: pointer;
 `;
 
-const ProductCard = ({ name, price, image, description }: Product) => {
+const ProductCard = ({
+  name,
+  price,
+  image,
+  description,
+  onBuyClick,
+}: Product) => {
+  const [addedToCart, setAddedToCart] = useState(false);
+  const handleBuyClick = () => {
+    onBuyClick();
+
+    setAddedToCart(true);
+  };
   return (
     <CardContainer>
       <ProductImage src={`${image}`} />
@@ -83,8 +99,8 @@ const ProductCard = ({ name, price, image, description }: Product) => {
         <ProductPrice>R${price}</ProductPrice>
       </NameAndPriceContainer>
       <ProductDescription>{description}</ProductDescription>
-      <BuyButton>
-        <ShoppingBag /> COMPRAR
+      <BuyButton addedToCart={addedToCart} onClick={handleBuyClick}>
+        <ShoppingBag /> {addedToCart ? "ADICIONADO" : "COMPRAR"}
       </BuyButton>
     </CardContainer>
   );

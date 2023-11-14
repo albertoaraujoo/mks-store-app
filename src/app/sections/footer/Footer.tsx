@@ -8,7 +8,9 @@ const FooterContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #000000;
+  color: #00000;
+  position: relative;
+  bottom: 0;
 `;
 const Footer = () => {
   return (

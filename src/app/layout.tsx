@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import TanstackProviver from "./providers/TanstackProviver";
-import Header from "./sections/header/Header";
-import Footer from "./sections/footer/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,13 +16,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <>
+      <html lang="en">
         <TanstackProviver>
-          <Header numberOfItems={1} />
-          {children} <Footer />
+          <body className={inter.className}>{children}</body>
         </TanstackProviver>
-      </body>
-    </html>
+      </html>
+    </>
   );
 }

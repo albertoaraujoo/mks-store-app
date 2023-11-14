@@ -1,11 +1,12 @@
 "use client";
 import styled from "styled-components";
-
 import ProductsList from "./sections/products-list/ProductsList";
+import Header from "./sections/header/Header";
+import Footer from "./sections/footer/Footer";
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
   align-items: center;
 `;
@@ -13,7 +14,9 @@ const Container = styled.div`
 export default function Home() {
   return (
     <Container>
+      <Header numberOfItems={9} />
       <ProductsList />
+      <Footer />
     </Container>
   );
 }

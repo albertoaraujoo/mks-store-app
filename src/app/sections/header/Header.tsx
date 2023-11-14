@@ -1,8 +1,9 @@
 "use client";
-import React from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import CartIcon from "@/app/icons/cart-icon";
-import { useState } from "react";
+
+import { useOpenStore } from "@/app/stores/OpenStore";
 
 export type HeaderProps = {
   numberOfItems: number;
@@ -49,6 +50,7 @@ const CartButton = styled.div`
   width: 90px;
   height: 45px;
   border-radius: 8px;
+  cursor: pointer;
 `;
 
 const CartItemsNumber = styled.p`
@@ -56,14 +58,16 @@ const CartItemsNumber = styled.p`
 `;
 
 const Header = (headerProps: HeaderProps) => {
+  const setOpenTrue = useOpenStore((state) => state.setOpenTrue);
   const [numberOfItems, setNumberOfItems] = useState(0);
+
   return (
     <Container>
       <TextContainer>
         <MKSText>MKS</MKSText>
         <SistemasText>Sistemas</SistemasText>
       </TextContainer>
-      <CartButton>
+      <CartButton onClick={setOpenTrue}>
         <CartIcon />
         <CartItemsNumber>{numberOfItems.toString()}</CartItemsNumber>
       </CartButton>

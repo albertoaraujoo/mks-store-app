@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import ProductCard from "@/app/components/product-card";
 import styled from "styled-components";
+import CheckoutModal from "@/app/components/checkout-modal";
 
 type Product = {
   id: number;
@@ -22,11 +23,11 @@ const ListContainer = styled.div`
   justify-content: center;
   padding: 20px;
   width: 70%;
-  height: 100vh
-  flex-grow: 1;
+  height: 80vh;
 `;
 
 const ProductsList = () => {
+  const [cart, setCart] = useState<Product[]>([]);
   const { data, isLoading, isError } = useQuery({
     queryKey: ["Products"],
     queryFn: async () => {
@@ -34,7 +35,6 @@ const ProductsList = () => {
         const { data } = await axios.get(
           "https://mks-frontend-challenge-04811e8151e6.herokuapp.com/api/v1/products?page=1&rows=10&sortBy=id&orderBy=DESC"
         );
-        await console.log(data ? data : "nothing");
         return data.products as Product[];
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
@@ -42,6 +42,10 @@ const ProductsList = () => {
       }
     },
   });
+
+  const addToCart = (product: Product) => {
+    setCart((prevCart) => [...prevCart, product]);
+  };
 
   if (isLoading) return <p>Carregando...</p>;
   if (isError) return <p>Ocorreu um erro ao buscar os dados</p>;
@@ -55,8 +59,10 @@ const ProductsList = () => {
           price={product.price}
           image={product.photo}
           description={product.description}
+          onBuyClick={() => addToCart(product)}
         />
       ))}
+      <CheckoutModal setCart={setCart} cart={cart} />
     </ListContainer>
   );
 };
