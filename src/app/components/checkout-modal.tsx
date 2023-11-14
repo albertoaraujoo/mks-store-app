@@ -8,6 +8,7 @@ import { useOpenStore } from "@/app/stores/OpenStore";
 type CheckoutModalProps = {
   cart: { id: number; name: string; photo: string; price: number }[];
   onClose: () => void;
+  setCart: any;
 };
 
 const ModalCheckoutContainer = styled.div`
