@@ -88,12 +88,17 @@ const ProductCard = ({
   const [addedToCart, setAddedToCart] = useState(false);
   const handleBuyClick = () => {
     onBuyClick();
+
     setAddedToCart(true);
   };
-
   return (
     <CardContainer>
-      {/* ... */}
+      <ProductImage src={`${image}`} />
+      <NameAndPriceContainer>
+        <ProductName>{name}</ProductName>
+        <ProductPrice>R${price}</ProductPrice>
+      </NameAndPriceContainer>
+      <ProductDescription>{description}</ProductDescription>
       <BuyButton addedToCart={addedToCart} onClick={handleBuyClick}>
         <ShoppingBag /> {addedToCart ? "ADICIONADO" : "COMPRAR"}
       </BuyButton>
