@@ -6,6 +6,7 @@ import CheckoutProductCard from "./checkout-product-card";
 import { useOpenStore } from "@/app/stores/OpenStore";
 
 type CheckoutModalProps = {
+  filter(arg0: (item: any, i: number) => boolean): unknown;
   cart: { id: number; name: string; photo: string; price: number }[];
   onClose: () => void;
   setCart: any;
@@ -91,9 +92,10 @@ const CheckoutModal = ({ cart, setCart }: CheckoutModalProps) => {
 
   const handleRemoveFromCart = (index: number) => {
     setCart((prevCart: CheckoutModalProps) =>
-      prevCart.filter((_: number, i) => i !== index)
+      prevCart.filter((item: any, i: number) => i !== index)
     );
   };
+
   const calculateTotal = () => {
     const total = cart.reduce((acc, product) => acc + Number(product.price), 0);
     return Math.ceil(total);
