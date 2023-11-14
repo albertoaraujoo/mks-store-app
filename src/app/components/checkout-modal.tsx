@@ -91,7 +91,7 @@ const CheckoutModal = ({ cart, setCart }: CheckoutModalProps) => {
 
   const handleRemoveFromCart = (index: number) => {
     setCart((prevCart: CheckoutModalProps) =>
-      prevCart.filter((_, i) => i !== index)
+      prevCart.filter((_: number, i) => i !== index)
     );
   };
   const calculateTotal = () => {
