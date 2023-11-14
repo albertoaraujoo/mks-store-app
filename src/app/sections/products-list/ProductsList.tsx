@@ -26,6 +26,11 @@ const ListContainer = styled.div`
   height: 80vh;
 `;
 
+type ProductsListProps = {
+  setCart: React.Dispatch<React.SetStateAction<Product[]>>;
+  cart: Product[];
+};
+
 const ProductsList = () => {
   const [cart, setCart] = useState<Product[]>([]);
   const { data, isLoading, isError } = useQuery({
