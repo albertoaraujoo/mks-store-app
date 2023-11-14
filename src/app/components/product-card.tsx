@@ -62,13 +62,13 @@ const ProductDescription = styled.p`
   margin-left: 8px;
 `;
 
-const BuyButton = styled.button`
+const BuyButton = styled.button<{ addedToCart: boolean }>`
   display: flex;
-  background-color: #4caf50;
+  background-color: ${({ addedToCart }) =>
+    addedToCart ? "#4caf50" : "#0f52ba"};
   justify-content: center;
   align-items: center;
   gap: 15px;
-  background-color: #0f52ba;
   width: 100%;
   height: 40px;
   border: none;
@@ -88,17 +88,12 @@ const ProductCard = ({
   const [addedToCart, setAddedToCart] = useState(false);
   const handleBuyClick = () => {
     onBuyClick();
-
     setAddedToCart(true);
   };
+
   return (
     <CardContainer>
-      <ProductImage src={`${image}`} />
-      <NameAndPriceContainer>
-        <ProductName>{name}</ProductName>
-        <ProductPrice>R${price}</ProductPrice>
-      </NameAndPriceContainer>
-      <ProductDescription>{description}</ProductDescription>
+      {/* ... */}
       <BuyButton addedToCart={addedToCart} onClick={handleBuyClick}>
         <ShoppingBag /> {addedToCart ? "ADICIONADO" : "COMPRAR"}
       </BuyButton>
