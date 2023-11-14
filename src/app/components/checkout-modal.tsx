@@ -90,9 +90,8 @@ const CheckoutModal = ({ cart, setCart }: CheckoutModalProps) => {
   console.log(opened);
 
   const handleRemoveFromCart = (index: number) => {
-    setCart((prevCart) => prevCart.filter((_, i) => i !== index));
+    setCart((prevCart: any) => prevCart.filter((_, i) => i !== index));
   };
-
   const calculateTotal = () => {
     const total = cart.reduce((acc, product) => acc + Number(product.price), 0);
     return Math.ceil(total);
