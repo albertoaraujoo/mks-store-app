@@ -1,22 +1,20 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import CloseButton from "../icons/close-button";
 import CheckoutProductCard from "./checkout-product-card";
 import { useOpenStore } from "@/app/stores/OpenStore";
 
-type CheckoutModalProps = {
-  filter(
-    arg0: (_item: any, i: number) => boolean
-  ): { id: number; name: string; photo: string; price: number }[];
-  cart: { id: number; name: string; photo: string; price: number }[];
-  onClose: () => void;
+type Product = {
+  id: number;
+  name: string;
+  photo: string;
+  price: number;
+};
 
-  setCart: React.Dispatch<
-    React.SetStateAction<
-      { id: number; name: string; photo: string; price: number }[]
-    >
-  >;
+type CheckoutModalProps = {
+  setCart: Dispatch<SetStateAction<Product[]>>;
+  cart: Product[];
 };
 
 const ModalCheckoutContainer = styled.div`
@@ -91,11 +89,9 @@ const BottomContainer = styled.div`
   width: 100%;
 `;
 
-const CheckoutModal = ({ cart, setCart }: CheckoutModalProps) => {
+const CheckoutModal: React.FC<CheckoutModalProps> = ({ setCart, cart }) => {
   const setOpenFalse = useOpenStore((state) => state.setOpenFalse);
   const opened = useOpenStore((state) => state.open);
-
-  console.log(opened);
 
   const handleRemoveFromCart = (index: number) => {
     setCart(
