@@ -10,7 +10,7 @@ type Product = {
   name: string;
   photo: string;
   price: number;
-  description?: string;
+  description?: string | any;
   onBuyClick?: () => void;
 };
 
