@@ -3,11 +3,11 @@ import QuantityButtons from "./quantity-buttons";
 import CloseButton from "../icons/close-button";
 
 type CheckoutProductCardProps = {
+  id: number;
   name: string;
   photo: string;
   price: number;
-  key: number;
-  onRemove: () => void;
+  onClick: (item: number) => void;
 };
 
 const CardContainer = styled.div`
@@ -55,16 +55,16 @@ const CloseButtonBox = styled.div`
 `;
 
 const CheckoutProductCard = ({
+  id,
   name,
   photo,
   price,
-  key,
-  onRemove,
+  onClick,
 }: CheckoutProductCardProps) => {
   return (
-    <CardContainer key={key}>
+    <CardContainer key={id}>
       <CloseButtonBox>
-        <CloseButton onClick={onRemove} height={20} width={20} />
+        <CloseButton onClick={onClick} height={20} width={20} />
       </CloseButtonBox>
       <ProductImageAndName>
         <ProductImage src={`${photo}`} />

@@ -4,11 +4,12 @@ import ShoppingBag from "../icons/shopping-bag";
 import { useState } from "react";
 
 type Product = {
+  id: number;
   name: string;
   price: number;
   image: string;
   description: string;
-  onBuyClick: () => void;
+  onBuyClick: (item: any) => void;
 };
 
 const CardContainer = styled.div`
@@ -79,6 +80,7 @@ const BuyButton = styled.button<{ addedToCart: boolean }>`
 `;
 
 const ProductCard = ({
+  id,
   name,
   price,
   image,
@@ -86,9 +88,9 @@ const ProductCard = ({
   onBuyClick,
 }: Product) => {
   const [addedToCart, setAddedToCart] = useState(false);
-  const handleBuyClick = () => {
-    onBuyClick();
 
+  const handleBuyClick = () => {
+    onBuyClick(id);
     setAddedToCart(true);
   };
   return (

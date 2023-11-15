@@ -1,9 +1,9 @@
-import React, { useState } from "react";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import ProductCard from "@/app/components/product-card";
 import styled from "styled-components";
 import CheckoutModal from "@/app/components/checkout-modal";
+import { useCartStore } from "@/app/stores/CartStore";
 
 type Product = {
   id: number;
@@ -11,7 +11,6 @@ type Product = {
   photo: string;
   price: number;
   description?: string | any;
-  onBuyClick?: () => void;
 };
 
 const ListContainer = styled.div`
@@ -26,8 +25,8 @@ const ListContainer = styled.div`
   height: 80vh;
 `;
 
-const ProductsList = () => {
-  const [cart, setCart] = useState<Product[]>([]);
+const ProductsList = ({ id, name, photo, price, description }: Product) => {
+  const addToCart = useCartStore((state) => state.addToCart);
   const { data, isLoading, isError } = useQuery({
     queryKey: ["Products"],
     queryFn: async () => {
@@ -35,6 +34,7 @@ const ProductsList = () => {
         const { data } = await axios.get(
           "https://mks-frontend-challenge-04811e8151e6.herokuapp.com/api/v1/products?page=1&rows=10&sortBy=id&orderBy=DESC"
         );
+        console.log(data.products);
         return data.products as Product[];
       } catch (error) {
         console.error("Erro ao buscar dados:", error);
@@ -43,10 +43,6 @@ const ProductsList = () => {
     },
   });
 
-  const addToCart = (product: Product) => {
-    setCart((prevCart) => [...prevCart, product]);
-  };
-
   if (isLoading) return <p>Carregando...</p>;
   if (isError) return <p>Ocorreu um erro ao buscar os dados</p>;
 
@@ -54,6 +50,7 @@ const ProductsList = () => {
     <ListContainer>
       {data?.map((product) => (
         <ProductCard
+          id={product.id}
           key={product.id}
           name={product.name}
           price={product.price}
@@ -62,7 +59,7 @@ const ProductsList = () => {
           onBuyClick={() => addToCart(product)}
         />
       ))}
-      <CheckoutModal setCart={setCart} cart={cart} />
+      <CheckoutModal />
     </ListContainer>
   );
 };

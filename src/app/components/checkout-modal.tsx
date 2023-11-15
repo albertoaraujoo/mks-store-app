@@ -1,21 +1,9 @@
 "use client";
-import React, { useState, Dispatch, SetStateAction } from "react";
 import styled from "styled-components";
 import CloseButton from "../icons/close-button";
 import CheckoutProductCard from "./checkout-product-card";
 import { useOpenStore } from "@/app/stores/OpenStore";
-
-type Product = {
-  id: number;
-  name: string;
-  photo: string;
-  price: number;
-};
-
-type CheckoutModalProps = {
-  setCart: Dispatch<SetStateAction<Product[]>>;
-  cart: Product[];
-};
+import { useCartStore } from "../stores/CartStore";
 
 const ModalCheckoutContainer = styled.div`
   display: flex;
@@ -89,17 +77,11 @@ const BottomContainer = styled.div`
   width: 100%;
 `;
 
-const CheckoutModal: React.FC<CheckoutModalProps> = ({ setCart, cart }) => {
+const CheckoutModal = () => {
   const setOpenFalse = useOpenStore((state) => state.setOpenFalse);
   const opened = useOpenStore((state) => state.open);
-
-  const handleRemoveFromCart = (index: number) => {
-    setCart(
-      (
-        prevCart: { id: number; name: string; photo: string; price: number }[]
-      ) => prevCart.filter((_item: any, i: number) => i !== index)
-    );
-  };
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const cart = useCartStore((state) => state.cart);
 
   const calculateTotal = () => {
     const total = cart.reduce((acc, product) => acc + Number(product.price), 0);
@@ -113,23 +95,22 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ setCart, cart }) => {
         <CloseButton height={38} width={38} onClick={setOpenFalse} />
       </CheckoutTitleAndButton>
       <CheckoutProducts>
-        {cart[0]
-          ? cart.map((product, index) => (
-              <CheckoutProductCard
-                key={index}
-                name={product.name}
-                photo={product.photo}
-                price={product.price}
-                onRemove={() => handleRemoveFromCart(index)}
-              />
-            ))
-          : null}
+        {cart?.map((product, index) => (
+          <CheckoutProductCard
+            id={product.id}
+            key={product.id}
+            name={product.name}
+            photo={product.photo}
+            price={product.price}
+            onClick={() => removeFromCart(index)}
+          />
+        ))}
       </CheckoutProducts>
 
       <BottomContainer>
         <TotalContainer>
           <TotalText>Total:</TotalText>
-          <TotalValue>{`R$ ${calculateTotal()}`}</TotalValue>
+          <TotalValue>{calculateTotal()}</TotalValue>
         </TotalContainer>
         <FinalizeButton>FINALIZAR</FinalizeButton>
       </BottomContainer>

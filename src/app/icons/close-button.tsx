@@ -1,7 +1,7 @@
 type CloseButtonProps = {
   width: number;
   height: number;
-  onClick: () => void;
+  onClick: (item: any) => void;
 };
 
 const CloseButton = ({ width, height, onClick }: CloseButtonProps) => {
