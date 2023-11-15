@@ -14,6 +14,12 @@ type Product = {
   quantity: number;
 };
 
+type CheckoutModalProps = {
+  cart: Product[];
+  onClose: () => void;
+  setCart: React.Dispatch<React.SetStateAction<Product[]>>;
+};
+
 const ListContainer = styled.div`
   display: flex;
   align-items: center;
@@ -25,11 +31,6 @@ const ListContainer = styled.div`
   width: 70%;
   height: 80vh;
 `;
-
-type ProductsListProps = {
-  setCart: React.Dispatch<React.SetStateAction<Product[]>>;
-  cart: Product[];
-};
 
 const ProductsList = () => {
   const [cart, setCart] = useState<Product[]>([]);
