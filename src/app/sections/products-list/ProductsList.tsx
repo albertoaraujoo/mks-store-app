@@ -25,7 +25,7 @@ const ListContainer = styled.div`
   height: 80vh;
 `;
 
-const ProductsList = ({ id, name, photo, price, description }: Product) => {
+const ProductsList = () => {
   const addToCart = useCartStore((state) => state.addToCart);
   const { data, isLoading, isError } = useQuery({
     queryKey: ["Products"],
