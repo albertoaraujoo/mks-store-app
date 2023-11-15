@@ -8,10 +8,9 @@ import CheckoutModal from "@/app/components/checkout-modal";
 type Product = {
   id: number;
   name: string;
-  price: number;
   photo: string;
+  price: number;
   description: string;
-  quantity: number;
 };
 
 type CheckoutModalProps = {

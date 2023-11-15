@@ -6,16 +6,15 @@ import CheckoutProductCard from "./checkout-product-card";
 import { useOpenStore } from "@/app/stores/OpenStore";
 
 type CheckoutModalProps = {
+  filter(
+    arg0: (_item: any, i: number) => boolean
+  ): { id: number; name: string; photo: string; price: number }[];
   cart: { id: number; name: string; photo: string; price: number }[];
   onClose: () => void;
+
   setCart: React.Dispatch<
     React.SetStateAction<
-      {
-        id: number;
-        name: string;
-        photo: string;
-        price: number;
-      }[]
+      { id: number; name: string; photo: string; price: number }[]
     >
   >;
 };
@@ -99,8 +98,10 @@ const CheckoutModal = ({ cart, setCart }: CheckoutModalProps) => {
   console.log(opened);
 
   const handleRemoveFromCart = (index: number) => {
-    setCart((prevCart: CheckoutModalProps) =>
-      prevCart.filter((item: any, i: number) => i !== index)
+    setCart(
+      (
+        prevCart: { id: number; name: string; photo: string; price: number }[]
+      ) => prevCart.filter((_item: any, i: number) => i !== index)
     );
   };
 
